@@ -51,18 +51,19 @@ public class ArvoreBinaria {
 
 
     public void preOrdem() {
+        Node ponteiro = raiz;
+        System.out.println(raiz.getInfo());
         if (raiz.getNoEsquerdo() != null || raiz.getNoDireito() != null) {
+            raiz = raiz.getNoEsquerdo();
             System.out.println(raiz.getInfo());
-            Node ponteiro = raiz.getNoEsquerdo();
-            System.out.println(ponteiro.getInfo());
             raiz = raiz.getNoEsquerdo();
             preOrdem();
-            System.out.println(ponteiro.getInfo());
 
         }
         else {
-            raiz = raiz.getNoDireito();
-            preOrdem();
+            if(raiz.getNoEsquerdo() == null) {
+                raiz = raiz.getNoDireito();
+            }
         }
     }
 }
