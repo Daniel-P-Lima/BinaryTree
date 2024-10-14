@@ -2,11 +2,13 @@ public class Main {
     public static void main(String[] args) {
         ArvoreBinaria arvoreBinaria = new ArvoreBinaria();
 
-        arvoreBinaria.insere(50);
-        arvoreBinaria.insere(30);
-        arvoreBinaria.insere(20);
-        arvoreBinaria.insere(10);
-        arvoreBinaria.insere(70);
-        arvoreBinaria.preOrdem();
+        arvoreBinaria.insere(4);
+        arvoreBinaria.insere(6);
+        arvoreBinaria.insere(2);
+        arvoreBinaria.insere(1);
+        arvoreBinaria.insere(3);
+        arvoreBinaria.insere(5);
+        arvoreBinaria.insere(7);
+        arvoreBinaria.inOrdem(null);
     }
 }
