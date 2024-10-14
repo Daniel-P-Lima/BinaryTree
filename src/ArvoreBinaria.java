@@ -12,8 +12,7 @@ public class ArvoreBinaria {
 
     public void insere(int info) {
         if (vazia()) {
-            Node novoNo = new Node(info);
-            this.raiz = novoNo;
+            this.raiz = new Node(info);
         }
         else {
             Node ponteiro = raiz;
@@ -51,19 +50,17 @@ public class ArvoreBinaria {
 
 
     public void preOrdem() {
-        Node ponteiro = raiz;
         System.out.println(raiz.getInfo());
         if (raiz.getNoEsquerdo() != null || raiz.getNoDireito() != null) {
             raiz = raiz.getNoEsquerdo();
-            System.out.println(raiz.getInfo());
-            raiz = raiz.getNoEsquerdo();
             preOrdem();
+            raiz = raiz.getNoDireito();
+            System.out.println(raiz.getInfo());
 
         }
         else {
-            if(raiz.getNoEsquerdo() == null) {
-                raiz = raiz.getNoDireito();
-            }
+            System.out.println("Raiz sem filhos");
+
         }
     }
 }
