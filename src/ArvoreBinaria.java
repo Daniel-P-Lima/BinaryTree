@@ -48,19 +48,16 @@ public class ArvoreBinaria {
         }
     }
 
-
-    public void preOrdem() {
-        System.out.println(raiz.getInfo());
-        if (raiz.getNoEsquerdo() != null || raiz.getNoDireito() != null) {
-            raiz = raiz.getNoEsquerdo();
-            preOrdem();
-            raiz = raiz.getNoDireito();
-            System.out.println(raiz.getInfo());
-
+    public void inOrdem(Node node) {
+        if(node == null) {
+            node = raiz;
         }
-        else {
-            System.out.println("Raiz sem filhos");
-
+        if (node.getNoEsquerdo() != null) {
+            inOrdem(node.getNoEsquerdo());
+        }
+        System.out.println(node.getInfo());
+        if (node.getNoDireito() != null) {
+            inOrdem(node.getNoDireito());
         }
     }
 }

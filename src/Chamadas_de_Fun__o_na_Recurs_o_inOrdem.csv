@@ -1,0 +1,15 @@
+Passo,Função,Operação
+Chamada,inOrdem(4),Empilha
+Chamada,inOrdem(2),Empilha
+Chamada,inOrdem(1),Empilha
+Desempilhar,inOrdem(1),Imprime 1 e Desempilha
+Desempilhar,inOrdem(2),Imprime 2 e Desempilha
+Chamada,inOrdem(3),Empilha
+Desempilhar,inOrdem(3),Imprime 3 e Desempilha
+Desempilhar,inOrdem(4),Imprime 4 e Desempilha
+Chamada,inOrdem(6),Empilha
+Chamada,inOrdem(5),Empilha
+Desempilhar,inOrdem(5),Imprime 5 e Desempilha
+Desempilhar,inOrdem(6),Imprime 6 e Desempilha
+Chamada,inOrdem(7),Empilha
+Desempilhar,inOrdem(7),Imprime 7 e Desempilha
