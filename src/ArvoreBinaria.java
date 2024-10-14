@@ -16,40 +16,45 @@ public class ArvoreBinaria {
         }
         else {
             Node ponteiro = raiz;
-            if (info > raiz.getInfo()) {
-                if (ponteiro.getNoDireito() == null) {
-                    ponteiro.setNoDireito(new Node(info));
-                }
-                else {
-                    while (info > ponteiro.getInfo() && ponteiro.getNoDireito() != null) {
-                        ponteiro = ponteiro.getNoDireito();
-                    }
-                    if (info > ponteiro.getInfo()) {
-                        ponteiro.setNoDireito(new Node(info));
-                    }
-                }
-            }
-            else if (info < raiz.getInfo()) {
-                if (ponteiro.getNoEsquerdo() == null) {
-                    ponteiro.setNoEsquerdo(new Node (info));
-                }
-                else {
-                    while (info < ponteiro.getInfo() && ponteiro.getNoEsquerdo() != null) {
+            while (true) {
+                if (info < ponteiro.getInfo()) {
+                    if (ponteiro.getNoEsquerdo() == null) {
+                        ponteiro.setNoEsquerdo(new Node(info));
+                        break;
+                    } else {
                         ponteiro = ponteiro.getNoEsquerdo();
                     }
-                    if (info > ponteiro.getInfo()) {
+                }
+                else if (info > ponteiro.getInfo()) {
+                    if (ponteiro.getNoDireito() == null) {
                         ponteiro.setNoDireito(new Node(info));
+                        break;
+                    } else {
+                        ponteiro = ponteiro.getNoDireito();
                     }
-                    else if (info < ponteiro.getInfo()) {
-                        ponteiro.setNoEsquerdo(new Node(info));
-                    }
+                }
+                else {
+                    break;
                 }
             }
         }
     }
 
+    public void preOrdem(Node node){
+        if (node == null) {
+            node = raiz;
+        }
+        System.out.println(node.getInfo());
+        if (node.getNoEsquerdo() != null) {
+            preOrdem(node.getNoEsquerdo());
+        }
+        if (node.getNoDireito() != null) {
+            preOrdem(node.getNoDireito());
+        }
+    }
+
     public void inOrdem(Node node) {
-        if(node == null) {
+        if (node == null) {
             node = raiz;
         }
         if (node.getNoEsquerdo() != null) {
@@ -59,5 +64,18 @@ public class ArvoreBinaria {
         if (node.getNoDireito() != null) {
             inOrdem(node.getNoDireito());
         }
+    }
+
+    public void posOrdem(Node node) {
+        if (node == null) {
+            node = raiz;
+        }
+        if (node.getNoEsquerdo() != null) {
+            posOrdem(node.getNoEsquerdo());
+        }
+        if (node.getNoDireito() != null) {
+            posOrdem(node.getNoDireito());
+        }
+        System.out.println(node.getInfo());
     }
 }
