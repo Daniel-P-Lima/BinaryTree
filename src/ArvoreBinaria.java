@@ -12,58 +12,70 @@ public class ArvoreBinaria {
 
     public void insere(int info) {
         if (vazia()) {
-            Node novoNo = new Node(info);
-            this.raiz = novoNo;
+            this.raiz = new Node(info);
         }
         else {
             Node ponteiro = raiz;
-            if (info > raiz.getInfo()) {
-                if (ponteiro.getNoDireito() == null) {
-                    ponteiro.setNoDireito(new Node(info));
-                }
-                else {
-                    while (info > ponteiro.getInfo() && ponteiro.getNoDireito() != null) {
-                        ponteiro = ponteiro.getNoDireito();
-                    }
-                    if (info > ponteiro.getInfo()) {
-                        ponteiro.setNoDireito(new Node(info));
-                    }
-                }
-            }
-            else if (info < raiz.getInfo()) {
-                if (ponteiro.getNoEsquerdo() == null) {
-                    ponteiro.setNoEsquerdo(new Node (info));
-                }
-                else {
-                    while (info < ponteiro.getInfo() && ponteiro.getNoEsquerdo() != null) {
+            while (true) {
+                if (info < ponteiro.getInfo()) {
+                    if (ponteiro.getNoEsquerdo() == null) {
+                        ponteiro.setNoEsquerdo(new Node(info));
+                        break;
+                    } else {
                         ponteiro = ponteiro.getNoEsquerdo();
                     }
-                    if (info > ponteiro.getInfo()) {
+                }
+                else if (info > ponteiro.getInfo()) {
+                    if (ponteiro.getNoDireito() == null) {
                         ponteiro.setNoDireito(new Node(info));
+                        break;
+                    } else {
+                        ponteiro = ponteiro.getNoDireito();
                     }
-                    else if (info < ponteiro.getInfo()) {
-                        ponteiro.setNoEsquerdo(new Node(info));
-                    }
+                }
+                else {
+                    break;
                 }
             }
         }
     }
 
-
-    public void preOrdem() {
-        Node ponteiro = raiz;
-        System.out.println(raiz.getInfo());
-        if (raiz.getNoEsquerdo() != null || raiz.getNoDireito() != null) {
-            raiz = raiz.getNoEsquerdo();
-            System.out.println(raiz.getInfo());
-            raiz = raiz.getNoEsquerdo();
-            preOrdem();
-
+    public void preOrdem(Node node){
+        if (node == null) {
+            node = raiz;
         }
-        else {
-            if(raiz.getNoEsquerdo() == null) {
-                raiz = raiz.getNoDireito();
-            }
+        System.out.println(node.getInfo());
+        if (node.getNoEsquerdo() != null) {
+            preOrdem(node.getNoEsquerdo());
         }
+        if (node.getNoDireito() != null) {
+            preOrdem(node.getNoDireito());
+        }
+    }
+
+    public void inOrdem(Node node) {
+        if (node == null) {
+            node = raiz;
+        }
+        if (node.getNoEsquerdo() != null) {
+            inOrdem(node.getNoEsquerdo());
+        }
+        System.out.println(node.getInfo());
+        if (node.getNoDireito() != null) {
+            inOrdem(node.getNoDireito());
+        }
+    }
+
+    public void posOrdem(Node node) {
+        if (node == null) {
+            node = raiz;
+        }
+        if (node.getNoEsquerdo() != null) {
+            posOrdem(node.getNoEsquerdo());
+        }
+        if (node.getNoDireito() != null) {
+            posOrdem(node.getNoDireito());
+        }
+        System.out.println(node.getInfo());
     }
 }
