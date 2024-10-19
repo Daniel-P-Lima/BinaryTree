@@ -90,6 +90,9 @@ public class ArvoreBinaria {
         if (no.getNoDireito() == null && no.getNoEsquerdo() == null) {
             return true;
         }
+        if (no.getNoDireito() != null || no.getNoEsquerdo() != null) {
+            return false;
+        }
         else {
             if (no.getInfo() > raiz.getInfo()) {
                 no = no.getNoDireito();
@@ -140,10 +143,17 @@ public class ArvoreBinaria {
 
     }
 
-    public void removerElemento(int elemento) {
+    public int removerElemento(int elemento) {
         Node no = buscar(elemento);
         Node ponteiro = raiz;
-        while (ponteiro.getNoDireito().getInfo() != elemento && ponteiro.getNoEsquerdo().getInfo() != elemento) {
+        if (no == null) {
+            return 1;
+        }
+        if (elemento == raiz.getInfo()) {
+            System.out.println("Não foi possível remover a raiz");
+            return 1;
+        }
+        while (ponteiro.getNoDireito() != no && ponteiro.getNoEsquerdo() != no) {
             if (elemento < ponteiro.getInfo()) {
                 ponteiro = ponteiro.getNoEsquerdo();
             }
@@ -152,10 +162,39 @@ public class ArvoreBinaria {
             }
         }
         if (ponteiro.getNoEsquerdo() ==  no) {
-            ponteiro.setNoEsquerdo(null);
+            if (noFolha(ponteiro.getNoEsquerdo())) {
+                ponteiro.setNoEsquerdo(null);
+            }
+            else if (!noFolha(ponteiro.getNoEsquerdo())) {
+                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) {
+                    ponteiro.setNoEsquerdo(no.getNoDireito());
+                    insere(no.getNoEsquerdo().getInfo());
+                }
+                else if (no.getNoEsquerdo() == null){
+                    ponteiro.setNoEsquerdo(no.getNoDireito());
+                }
+                else if (no.getNoDireito() == null) {
+                    ponteiro.setNoDireito(no.getNoEsquerdo());
+                }
+            }
         }
         else if (ponteiro.getNoDireito() == no) {
-            ponteiro.setNoDireito(null);
+            if (noFolha(ponteiro.getNoDireito())) {
+                ponteiro.setNoDireito(null);
+            }
+            else if (!noFolha(ponteiro.getNoDireito())) {
+                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) {
+                    ponteiro.setNoDireito(no.getNoDireito());
+                    insere(no.getNoEsquerdo().getInfo());
+                }
+                else if (no.getNoEsquerdo() == null) {
+                    ponteiro.setNoDireito(no.getNoDireito());
+                }
+                else if (no.getNoDireito() == null) {
+                    ponteiro.setNoEsquerdo(no.getNoEsquerdo());
+                }
+            }
         }
+        return 0;
     }
 }

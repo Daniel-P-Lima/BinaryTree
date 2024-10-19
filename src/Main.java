@@ -2,14 +2,20 @@ public class Main {
     public static void main(String[] args) {
         ArvoreBinaria arvoreBinaria = new ArvoreBinaria();
 
-        arvoreBinaria.insere(4);
-        arvoreBinaria.insere(2);
-        arvoreBinaria.insere(6);
-        arvoreBinaria.insere(1);
-        arvoreBinaria.insere(3);
-        arvoreBinaria.insere(5);
-        arvoreBinaria.insere(7);
-        arvoreBinaria.insere(8);
+        arvoreBinaria.insere(40);
+        arvoreBinaria.insere(20);
+        arvoreBinaria.insere(60);
+        arvoreBinaria.insere(10);
+        arvoreBinaria.insere(30);
+        arvoreBinaria.insere(50);
+        arvoreBinaria.insere(70);
+        arvoreBinaria.insere(80);
+        arvoreBinaria.insere(25);
+        arvoreBinaria.insere(15);
+        arvoreBinaria.insere(90);
+        arvoreBinaria.insere(85);
+        arvoreBinaria.insere(86);
+        arvoreBinaria.insere(97);
         arvoreBinaria.preOrdem(null);
         System.out.println();
         arvoreBinaria.inOrdem(null);
@@ -18,7 +24,8 @@ public class Main {
         //arvoreBinaria.buscar(12);
         //arvoreBinaria.quantidadeFilhos(7);
         System.out.println();
-        arvoreBinaria.removerElemento(8);
+        arvoreBinaria.removerElemento(85);
         arvoreBinaria.inOrdem(null);
+        System.out.println();
     }
 }
