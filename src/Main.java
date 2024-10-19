@@ -15,7 +15,10 @@ public class Main {
         arvoreBinaria.inOrdem(null);
         System.out.println();
         arvoreBinaria.posOrdem(null);
-        arvoreBinaria.buscar(12);
-        arvoreBinaria.quantidadeFilhos(7);
+        //arvoreBinaria.buscar(12);
+        //arvoreBinaria.quantidadeFilhos(7);
+        System.out.println();
+        arvoreBinaria.removerElemento(8);
+        arvoreBinaria.inOrdem(null);
     }
 }
