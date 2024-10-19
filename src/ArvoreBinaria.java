@@ -146,13 +146,16 @@ public class ArvoreBinaria {
     public int removerElemento(int elemento) {
         Node no = buscar(elemento);
         Node ponteiro = raiz;
+        // Se o nó não existir retorna null
         if (no == null) {
             return 1;
         }
+        // Caso queira remover a raiz não pode
         if (elemento == raiz.getInfo()) {
             System.out.println("Não foi possível remover a raiz");
             return 1;
         }
+        // Parte para percorrer a árvore procurando o pai do elemento
         while (ponteiro.getNoDireito() != no && ponteiro.getNoEsquerdo() != no) {
             if (elemento < ponteiro.getInfo()) {
                 ponteiro = ponteiro.getNoEsquerdo();
@@ -162,36 +165,36 @@ public class ArvoreBinaria {
             }
         }
         if (ponteiro.getNoEsquerdo() ==  no) {
-            if (noFolha(ponteiro.getNoEsquerdo())) {
+            if (noFolha(ponteiro.getNoEsquerdo())) { // Verificando se é nó folha, se for só atribuir null
                 ponteiro.setNoEsquerdo(null);
             }
             else if (!noFolha(ponteiro.getNoEsquerdo())) {
-                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) {
-                    ponteiro.setNoEsquerdo(no.getNoDireito());
-                    insere(no.getNoEsquerdo().getInfo());
+                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) { // Aqui verifica se tem dois filhos, se tiver vai ter que fazer mais atribuições
+                    ponteiro.setNoEsquerdo(no.getNoDireito()); // Coloca o nó esquerdo do ponteiro o nó direito do nó removido
+                    insere(no.getNoEsquerdo().getInfo()); // Insere novamente o elemento do nó esquerdo ( só consegui fazer assim)
                 }
-                else if (no.getNoEsquerdo() == null){
-                    ponteiro.setNoEsquerdo(no.getNoDireito());
+                else if (no.getNoEsquerdo() == null){ // Verifica se o só tem um filho, sendo o filho esquerdo null
+                    ponteiro.setNoEsquerdo(no.getNoDireito()); // Coloca o nó esquerdo do ponteiro como o filho direito do nó removido
                 }
-                else if (no.getNoDireito() == null) {
-                    ponteiro.setNoDireito(no.getNoEsquerdo());
+                else if (no.getNoDireito() == null) { // Se tem um filho, sendo o filho direito null
+                    ponteiro.setNoDireito(no.getNoEsquerdo()); // Coloca o nó direito do ponteiro
                 }
             }
         }
         else if (ponteiro.getNoDireito() == no) {
-            if (noFolha(ponteiro.getNoDireito())) {
+            if (noFolha(ponteiro.getNoDireito())) { // Verificando se é nó folha, se for só atribuir null
                 ponteiro.setNoDireito(null);
             }
             else if (!noFolha(ponteiro.getNoDireito())) {
-                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) {
-                    ponteiro.setNoDireito(no.getNoDireito());
-                    insere(no.getNoEsquerdo().getInfo());
+                if (no.getNoDireito() != null && no.getNoEsquerdo() != null) { // Se tem dois filhos
+                    ponteiro.setNoDireito(no.getNoDireito()); // O ponteiro agora o nó direito dele é o filho do nó removido
+                    insere(no.getNoEsquerdo().getInfo()); // Insere novamente o nó esquerdo
                 }
-                else if (no.getNoEsquerdo() == null) {
-                    ponteiro.setNoDireito(no.getNoDireito());
+                else if (no.getNoEsquerdo() == null) { // Se o nó esquerdo é null
+                    ponteiro.setNoEsquerdo(no.getNoDireito()); // Seta o valor do ponteiro esquerdo como o valor do filho direito do nó removido
                 }
-                else if (no.getNoDireito() == null) {
-                    ponteiro.setNoEsquerdo(no.getNoEsquerdo());
+                else if (no.getNoDireito() == null) { // Se o nó direito é null
+                    ponteiro.setNoDireito(no.getNoEsquerdo()); // Seta o valor do ponteiro direito como o valor do filho esquerdo do nó removido
                 }
             }
         }
