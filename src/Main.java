@@ -26,7 +26,7 @@ public class Main {
         //arvoreBinaria.buscar(12);
         //arvoreBinaria.quantidadeFilhos(7);
         System.out.println();
-        arvoreBinaria.removerElemento(90);
+        arvoreBinaria.removerElemento(30);
         arvoreBinaria.inOrdem(null);
         System.out.println();
         arvoreBinaria.posOrdem(null);

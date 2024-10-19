@@ -143,6 +143,20 @@ public class ArvoreBinaria {
 
     }
 
+    public Node procuraPai(int elemento) {
+        Node pai = raiz;
+        Node no = buscar(elemento);
+        while (pai.getNoDireito() != no && pai.getNoEsquerdo() != no) {
+            if (elemento < pai.getInfo()) {
+                pai = pai.getNoEsquerdo();
+            }
+            else if (elemento > pai.getInfo()) {
+                pai = pai.getNoDireito();
+            }
+        }
+        return pai;
+    }
+
     public int removerElemento(int elemento) {
         Node no = buscar(elemento);
         Node ponteiro = raiz;
@@ -156,14 +170,7 @@ public class ArvoreBinaria {
             return 1;
         }
         // Parte para percorrer a árvore procurando o pai do elemento
-        while (ponteiro.getNoDireito() != no && ponteiro.getNoEsquerdo() != no) {
-            if (elemento < ponteiro.getInfo()) {
-                ponteiro = ponteiro.getNoEsquerdo();
-            }
-            else if (elemento > ponteiro.getInfo()) {
-                ponteiro = ponteiro.getNoDireito();
-            }
-        }
+        ponteiro = procuraPai(elemento);
         if (ponteiro.getNoEsquerdo() ==  no) {
             if (noFolha(ponteiro.getNoEsquerdo())) { // Verificando se é nó folha, se for só atribuir null
                 ponteiro.setNoEsquerdo(null);
