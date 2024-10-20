@@ -125,24 +125,6 @@ public class ArvoreBinaria {
 
     }
 
-    public int quantidadeFilhos(int elemento) {
-        Node no = buscar(elemento);
-        if (noFolha(no)) {
-            System.out.println("Esse elemento tem 0 filhos");
-            return 0;
-        }
-        else if (no.getNoEsquerdo() != null && no.getNoDireito() != null) {
-            System.out.println("Esse elemento tem 2 filhos");
-            return 2;
-        }
-        else if (no.getNoDireito() != null || no.getNoEsquerdo() != null) {
-            System.out.println("Esse elemento tem 1 filho");
-            return 1;
-        }
-        return 0;
-
-    }
-
     public Node procuraPai(int elemento) {
         Node pai = raiz;
         Node no = buscar(elemento);
