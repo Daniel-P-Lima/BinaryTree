@@ -24,11 +24,21 @@ public class Main {
         System.out.println("Pós ordem:");
         arvoreBinaria.posOrdem(null);
         //arvoreBinaria.buscar(12);
-        //arvoreBinaria.quantidadeFilhos(7);
         System.out.println();
-        arvoreBinaria.removerElemento(30);
+        //arvoreBinaria.removerElemento(30);
         arvoreBinaria.inOrdem(null);
         System.out.println();
         arvoreBinaria.posOrdem(null);
+        System.out.println();
+        //arvoreBinaria.removeMenorElemento();
+        System.out.println();
+        arvoreBinaria.inOrdem(null);
+        System.out.println();
+        //arvoreBinaria.removerMaiorElemento();
+        arvoreBinaria.inOrdem(null);
+        System.out.println();
+        arvoreBinaria.removerElemento(97);
+        System.out.println();
+        arvoreBinaria.inOrdem(null);
     }
 }

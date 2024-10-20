@@ -114,15 +114,27 @@ public class ArvoreBinaria {
             if (elemento > ponteiro.getInfo()) {
                 ponteiro = ponteiro.getNoDireito();
             }
-            else if (elemento < ponteiro.getInfo()) {
+            else {
                 ponteiro = ponteiro.getNoEsquerdo();
             }
         }
-        if (ponteiro == null) {
-            System.out.println("Elemento não encontrado");
+        return ponteiro;
+    }
+
+    public Node buscarMenor() {
+        Node ponteiro = raiz;
+        while (ponteiro.getNoEsquerdo() != null) {
+            ponteiro = ponteiro.getNoEsquerdo();
         }
         return ponteiro;
+    }
 
+    public Node buscarMaior() {
+        Node ponteiro = raiz;
+        while (ponteiro.getNoDireito() != null) {
+            ponteiro = ponteiro.getNoDireito();
+        }
+        return ponteiro;
     }
 
     public Node procuraPai(int elemento) {
@@ -188,5 +200,17 @@ public class ArvoreBinaria {
             }
         }
         return 0;
+    }
+
+    public void removeMenorElemento() {
+        Node no = buscarMenor();
+        Node ponteiro = procuraPai(no.getInfo());
+        ponteiro.setNoEsquerdo(null);
+    }
+
+    public void removerMaiorElemento() {
+        Node no = buscarMaior();
+        Node ponteiro = procuraPai(no.getInfo());
+        ponteiro.setNoDireito(null);
     }
 }
