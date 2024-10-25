@@ -213,4 +213,16 @@ public class ArvoreBinaria {
         Node ponteiro = procuraPai(no.getInfo());
         ponteiro.setNoDireito(null);
     }
+
+    public static int altura(Node no) {
+        if (no == null) {
+            return -1;
+        }
+        int esquerda = altura(no.getNoEsquerdo());
+        int direita = altura(no.getNoDireito());
+        if (esquerda > direita) {
+            return 1 + esquerda;
+        }
+        return 1 + direita;
+    }
 }
