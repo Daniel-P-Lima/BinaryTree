@@ -11,77 +11,84 @@ public class ArvoreBinaria {
 
 
     public void insere(int info) {
-        if (vazia()) {
-            this.raiz = new Node(info);
+        this.raiz = inserir(this.raiz, info);
+    }
+
+    private Node inserir(Node no, int info) {
+        if (no == null)
+            return new Node(info);
+
+        if (info < no.getInfo())
+            no.setNoEsquerdo(inserir(no.getNoEsquerdo(), info));
+        else if (info > no.getInfo())
+            no.setNoDireito(inserir(no.getNoDireito(), info));
+        else
+            return no;
+
+
+        int balanceamento = fatorBalanceamento(no);
+
+        if (balanceamento > 1 && info < no.getNoEsquerdo().getInfo())
+            return rotacaoDireita(no);
+
+        if (balanceamento < -1 && info > no.getNoDireito().getInfo())
+            return rotacaoEsquerda(no);
+
+        if (balanceamento > 1 && info > no.getNoEsquerdo().getInfo()) {
+            no.setNoEsquerdo(rotacaoEsquerda(no.getNoEsquerdo()));
+            return rotacaoDireita(no);
         }
-        else {
-            Node ponteiro = raiz;
-            while (true) {
-                if (info < ponteiro.getInfo()) {
-                    if (ponteiro.getNoEsquerdo() == null) {
-                        ponteiro.setNoEsquerdo(new Node(info));
-                        break;
-                    } else {
-                        ponteiro = ponteiro.getNoEsquerdo();
-                    }
-                }
-                else if (info > ponteiro.getInfo()) {
-                    if (ponteiro.getNoDireito() == null) {
-                        ponteiro.setNoDireito(new Node(info));
-                        break;
-                    } else {
-                        ponteiro = ponteiro.getNoDireito();
-                    }
-                }
-                else {
-                    break;
-                }
+
+        if (balanceamento < -1 && info < no.getNoDireito().getInfo()) {
+            no.setNoDireito(rotacaoDireita(no.getNoDireito()));
+            return rotacaoEsquerda(no);
+        }
+        return no;
+    }
+
+
+    public void preOrdem(Node no){
+        if (no == null) {
+            no = raiz;
+        }
+        if (no != null) {
+            System.out.println(no.getInfo());
+            if (no.getNoEsquerdo() != null) {
+                preOrdem(no.getNoEsquerdo());
+            }
+            if (no.getNoDireito() != null) {
+                preOrdem(no.getNoDireito());
             }
         }
     }
 
-    public void preOrdem(Node node){
-        if (node == null) {
-            node = raiz;
+    public void inOrdem(Node no) {
+        if (no == null) {
+            no = raiz;
         }
-        if (node != null) {
-            System.out.println(node.getInfo());
-            if (node.getNoEsquerdo() != null) {
-                preOrdem(node.getNoEsquerdo());
+        if (no != null) {
+            if (no.getNoEsquerdo() != null) {
+                inOrdem(no.getNoEsquerdo());
             }
-            if (node.getNoDireito() != null) {
-                preOrdem(node.getNoDireito());
-            }
-        }
-    }
-
-    public void inOrdem(Node node) {
-        if (node == null) {
-            node = raiz;
-        }
-        if (node != null) {
-            if (node.getNoEsquerdo() != null) {
-                inOrdem(node.getNoEsquerdo());
-            }
-            System.out.println(node.getInfo());
-            if (node.getNoDireito() != null) {
-                inOrdem(node.getNoDireito());
+            System.out.println(no.getInfo());
+            if (no.getNoDireito() != null) {
+                inOrdem(no.getNoDireito());
             }
         }
     }
 
-    public void posOrdem(Node node) {
-        if (node == null) {
-            node = raiz;
+    public void posOrdem(Node no) {
+        if (no == null) {
+            no = raiz;
         }
-        if (node != null) {
-            if (node.getNoEsquerdo() != null) {
-                posOrdem(node.getNoEsquerdo());
+        if (no != null) {
+            if (no.getNoEsquerdo() != null) {
+                posOrdem(no.getNoEsquerdo());
             }
-            if (node.getNoDireito() != null) {
-                posOrdem(node.getNoDireito());
+            if (no.getNoDireito() != null) {
+                posOrdem(no.getNoDireito());
             }
-            System.out.println(node.getInfo());
+            System.out.println(no.getInfo());
         }
 
     }
@@ -121,21 +128,31 @@ public class ArvoreBinaria {
         return ponteiro;
     }
 
-    public Node buscarMenor() {
-        Node ponteiro = raiz;
-        while (ponteiro.getNoEsquerdo() != null) {
-            ponteiro = ponteiro.getNoEsquerdo();
+
+    private Node buscarMenor(Node no) {
+        if (no == null) {
+            no = raiz;
         }
-        return ponteiro;
+        Node atual = no;
+        while (atual.getNoEsquerdo() != null) {
+            atual = atual.getNoEsquerdo();
+        }
+        return atual;
     }
 
-    public Node buscarMaior() {
-        Node ponteiro = raiz;
-        while (ponteiro.getNoDireito() != null) {
-            ponteiro = ponteiro.getNoDireito();
+
+    private Node buscarMaior(Node no) {
+        if (no == null) {
+            no = raiz;
         }
-        return ponteiro;
+
+        Node atual = no;
+        while (atual.getNoDireito() != null) {
+            atual = atual.getNoDireito();
+        }
+        return atual;
     }
+
 
     public Node procuraPai(int elemento) {
         Node pai = raiz;
@@ -151,17 +168,13 @@ public class ArvoreBinaria {
         return pai;
     }
 
-    public int removerElemento(int elemento) {
+    public Node removerElemento(int elemento) {
         Node no = buscar(elemento);
-        Node ponteiro = raiz;
+        Node ponteiro;
         // Se o nó não existir retorna null
         if (no == null) {
-            return 1;
-        }
-        // Caso queira remover a raiz não pode
-        if (elemento == raiz.getInfo()) {
-            System.out.println("Não foi possível remover a raiz");
-            return 1;
+            System.out.println("Elemento não encontrado");
+            return null;
         }
         // Parte para percorrer a árvore procurando o pai do elemento
         ponteiro = procuraPai(elemento);
@@ -171,7 +184,8 @@ public class ArvoreBinaria {
             }
             else if (!noFolha(ponteiro.getNoEsquerdo())) {
                 if (no.getNoDireito() != null && no.getNoEsquerdo() != null) { // Aqui verifica se tem dois filhos, se tiver vai ter que fazer mais atribuições
-                    ponteiro.setNoEsquerdo(no.getNoDireito()); // Coloca o nó esquerdo do ponteiro o nó direito do nó removido
+                    Node menor = buscarMenor(no.getNoDireito()); // Procura o menor da direita
+                    ponteiro.setNoEsquerdo(menor); // Coloca o menor no lugar
                     insere(no.getNoEsquerdo().getInfo()); // Insere novamente o elemento do nó esquerdo ( só consegui fazer assim)
                 }
                 else if (no.getNoEsquerdo() == null){ // Verifica se o só tem um filho, sendo o filho esquerdo null
@@ -188,7 +202,8 @@ public class ArvoreBinaria {
             }
             else if (!noFolha(ponteiro.getNoDireito())) {
                 if (no.getNoDireito() != null && no.getNoEsquerdo() != null) { // Se tem dois filhos
-                    ponteiro.setNoDireito(no.getNoDireito()); // O ponteiro agora o nó direito dele é o filho do nó removido
+                    Node menor = buscarMenor(no.getNoDireito()); // Procura menor na direita
+                    ponteiro.setNoDireito(menor);
                     insere(no.getNoEsquerdo().getInfo()); // Insere novamente o nó esquerdo
                 }
                 else if (no.getNoEsquerdo() == null) { // Se o nó esquerdo é null
@@ -199,17 +214,34 @@ public class ArvoreBinaria {
                 }
             }
         }
-        return 0;
+        int balanceamento = fatorBalanceamento(no);
+        if (balanceamento > 1 && fatorBalanceamento(no.getNoEsquerdo()) >= 0)
+            return rotacaoDireita(no);
+
+        if (balanceamento > 1 && fatorBalanceamento(no.getNoEsquerdo()) < 0) {
+            no.setNoEsquerdo(rotacaoEsquerda(no.getNoEsquerdo()));
+            return rotacaoDireita(no);
+        }
+
+        if (balanceamento < -1 && fatorBalanceamento(no.getNoDireito()) <= 0)
+            return rotacaoEsquerda(no);
+
+        if (balanceamento < -1 && fatorBalanceamento(no.getNoDireito()) > 0) {
+            no.setNoDireito(rotacaoDireita(no.getNoDireito()));
+            return rotacaoEsquerda(no);
+        }
+
+        return no;
     }
 
     public void removeMenorElemento() {
-        Node no = buscarMenor();
+        Node no = buscarMenor(null);
         Node ponteiro = procuraPai(no.getInfo());
         ponteiro.setNoEsquerdo(null);
     }
 
     public void removerMaiorElemento() {
-        Node no = buscarMaior();
+        Node no = buscarMaior(null);
         Node ponteiro = procuraPai(no.getInfo());
         ponteiro.setNoDireito(null);
     }
@@ -225,4 +257,28 @@ public class ArvoreBinaria {
         }
         return 1 + direita;
     }
+
+    private int fatorBalanceamento(Node no) {
+        if (no == null)
+            return 0;
+        return altura(no.getNoEsquerdo()) - altura(no.getNoDireito());
+    }
+
+    private Node rotacaoDireita(Node no) {
+        Node novaRaiz = no.getNoEsquerdo();
+        Node temp = novaRaiz.getNoDireito();
+        novaRaiz.setNoDireito(no);
+        no.setNoEsquerdo(temp);
+        return novaRaiz;
+    }
+
+
+    private Node rotacaoEsquerda(Node no) {
+        Node novaRaiz = no.getNoDireito();
+        Node temp = novaRaiz.getNoEsquerdo();
+        novaRaiz.setNoEsquerdo(no);
+        no.setNoDireito(temp);
+        return novaRaiz;
+    }
+
 }
